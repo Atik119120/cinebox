@@ -1,0 +1,74 @@
+{
+  "settings": {
+    "theme_name": "CineBox",
+    "footer_text": "Your ultimate destination for cinematic experiences. Stream the latest movies and TV shows in high definition.",
+    "logo_url": "/assets/cinebox-logo.png",
+    "favicon_url": "/assets/cinebox-logo.png",
+    "copyright_text": "© 2026 CineBox. All rights reserved.",
+    "explore_menu_title": "Explore",
+    "support_menu_title": "Support",
+    "header_code": "",
+    "footer_script": "",
+    "enable_header_ads": 0,
+    "header_ads_code": "",
+    "enable_sidebar_ads": 0,
+    "sidebar_ads_code": "",
+    "enable_in_content_ads": 0,
+    "in_content_ads_code": "",
+    "enable_footer_ads": 0,
+    "footer_ads_code": "",
+    "enable_popads": 0,
+    "popads_code": "",
+    "enable_google_ads": 0,
+    "google_ads_code": "",
+    "banner_ads_code": ""
+  },
+  "pages": [
+    {
+      "id": 1,
+      "title": "About CineBox",
+      "slug": "about-us",
+      "content": "Welcome to CineBox! We offer a rich catalog of movies and television series streamed in ultra-high fidelity.",
+      "menu_location": "explore",
+      "order_index": 0
+    },
+    {
+      "id": 2,
+      "title": "Trending Guide",
+      "slug": "trending-guide",
+      "content": "Discover the most popular movies and shows updated weekly based on audience viewership worldwide.",
+      "menu_location": "explore",
+      "order_index": 1
+    },
+    {
+      "id": 3,
+      "title": "Terms of Service",
+      "slug": "terms-of-service",
+      "content": "These terms govern your use of the CineBox streaming platform. Enjoy streaming responsibly!",
+      "menu_location": "support",
+      "order_index": 0
+    },
+    {
+      "id": 4,
+      "title": "Privacy Policy",
+      "slug": "privacy-policy",
+      "content": "We respect your privacy. No personal data is sold or shared with unauthorized third parties.",
+      "menu_location": "support",
+      "order_index": 1
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "Admin",
+      "email": "admin@cinebox.com",
+      "role": "admin"
+    }
+  ],
+  "current_user": {
+    "id": 1,
+    "name": "Admin",
+    "email": "admin@cinebox.com",
+    "role": "admin"
+  }
+}

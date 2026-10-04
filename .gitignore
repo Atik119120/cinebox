@@ -1,0 +1,16 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Temporary & backup files
+*.bak
+*.bak_*
+*.pre_exact_bak
+orig_it_return.js
+dom_dump.html
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+.DS_Store
