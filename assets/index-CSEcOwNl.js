@@ -429,125 +429,64 @@ function WA({items:n,type:i,onPlayClick:l,onInfoClick:r}){
 
 
 
+
+
+
+
+
+
 const NetworkSection=({onNetworkClick:e})=>{
   const networks=[
-    {
-      id:"amazon-prime",
-      name:"Amazon Prime",
-      logo:d.jsxs("div",{
-        className:"flex flex-col items-center justify-center",
-        children:[
-          d.jsx("span",{className:"text-[#00A8E1] font-extrabold text-base tracking-tight leading-none",children:"prime video"}),
-          d.jsx("svg",{className:"w-12 h-2 text-[#00A8E1] mt-0.5",viewBox:"0 0 40 8",children:d.jsx("path",{d:"M2 2 Q20 8 38 2",fill:"none",stroke:"currentColor",strokeWidth:"2.2",strokeLinecap:"round"})})
-        ]
-      })
-    },
-    {
-      id:"jio-hotstar",
-      name:"Jio Hotstar",
-      logo:d.jsxs("div",{
-        className:"bg-white text-black px-3 py-1.5 rounded-md flex items-center gap-1.5 font-extrabold text-xs shadow-sm border border-white/20",
-        children:[
-          d.jsx("svg",{className:"w-4 h-4 text-amber-500 fill-current",viewBox:"0 0 24 24",children:d.jsx("path",{d:"M12 2l2.4 7.4h7.6l-6.2 4.5 2.4 7.4-6.2-4.5-6.2 4.5 2.4-7.4-6.2-4.5h7.6z"})}),
-          d.jsx("span",{className:"text-black font-extrabold text-xs tracking-tight",children:"JioHotstar"})
-        ]
-      })
-    },
-    {
-      id:"jio-ott",
-      name:"Jio OTT",
-      logo:d.jsx("div",{
-        className:"w-11 h-11 rounded-full bg-[#0047FF] flex items-center justify-center font-black text-white text-base shadow-md border border-white/10 tracking-tight",
-        children:"Jio"
-      })
-    },
-    {
-      id:"k-drama",
-      name:"K-drama",
-      logo:d.jsxs("div",{
-        className:"flex flex-col items-center justify-center gap-0.5",
-        children:[
-          d.jsxs("div",{
-            className:"flex items-center gap-1.5 text-pink-400 font-extrabold text-xs",
-            children:[
-              d.jsx("svg",{className:"w-5 h-5 text-pink-400 stroke-current fill-none",viewBox:"0 0 24 24",strokeWidth:"2",children:d.jsx("path",{d:"M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"})}),
-              d.jsx("span",{className:"text-white font-bold text-xs tracking-tight",children:"K-drama"})
-            ]
-          }),
-          d.jsx("span",{className:"text-[8px] text-zinc-400 font-semibold uppercase tracking-widest",children:"COLLECTION"})
-        ]
-      })
-    },
-    {
-      id:"mx-player",
-      name:"MX Player",
-      logo:d.jsxs("div",{
-        className:"flex items-center gap-2",
-        children:[
-          d.jsx("div",{
-            className:"w-6 h-6 rounded-full bg-white text-black flex items-center justify-center font-bold text-xs pl-0.5 shadow-sm",
-            children:"▶"
-          }),
-          d.jsx("span",{className:"font-extrabold text-xs sm:text-sm text-white tracking-wider",children:"MXPLAYER"})
-        ]
-      })
-    },
-    {
-      id:"netflix",
-      name:"Netflix",
-      logo:d.jsx("span",{
-        className:"font-black text-2xl sm:text-3xl text-[#E50914] tracking-widest uppercase filter drop-shadow",
-        children:"NETFLIX"
-      })
-    },
-    {
-      id:"sony-liv",
-      name:"Sony Liv",
-      logo:d.jsxs("div",{
-        className:"w-10 h-10 rounded-lg bg-[#0a0a0f] border border-white/15 flex flex-col items-center justify-center shadow-md p-0.5",
-        children:[
-          d.jsx("span",{className:"text-[9px] font-black text-white leading-none tracking-tight",children:"SONY"}),
-          d.jsx("span",{className:"text-[10px] font-extrabold text-amber-400 leading-none mt-0.5",children:"liv"})
-        ]
-      })
-    },
-    {
-      id:"zee5",
-      name:"Zee 5",
-      logo:d.jsxs("div",{
-        className:"flex items-center font-black text-2xl text-white tracking-tighter",
-        children:[
-          d.jsx("span",{className:"text-white",children:"Z"}),
-          d.jsx("span",{className:"text-amber-400",children:"5"})
-        ]
-      })
-    }
+    { id:"netflix", name:"Netflix", logo: "https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" },
+    { id:"amazon-prime", name:"Prime Video", logo: "https://upload.wikimedia.org/wikipedia/commons/f/f1/Prime_Video.png" },
+    { id:"jio-hotstar", name:"Hotstar", logo: "https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_Hotstar_logo.svg" },
+    { id:"jiocinema", name:"JioCinema", logo: "https://upload.wikimedia.org/wikipedia/en/b/b3/JioCinema_logo.png" },
+    { id:"hoichoi", name:"Hoichoi", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/f/f3/Hoichoi_logo.png/640px-Hoichoi_logo.png" },
+    { id:"mx-player", name:"MX Player", logo: "https://upload.wikimedia.org/wikipedia/en/c/c5/MX_Player_logo.png" },
+    { id:"sony-liv", name:"Sony LIV", logo: "https://upload.wikimedia.org/wikipedia/en/d/d4/Sony_LIV_2022.png" },
+    { id:"zee5", name:"Zee5", logo: "https://upload.wikimedia.org/wikipedia/en/thumb/5/5a/Zee5_logo.png/640px-Zee5_logo.png" }
   ];
 
   return d.jsxs("div",{
-    className:"px-4 sm:px-6 lg:px-12 max-w-[1800px] mx-auto my-6 sm:my-8",
+    className:"w-full px-4 sm:px-6 lg:px-12 my-6 sm:my-8",
     children:[
       d.jsx("h2",{
-        className:"text-xl sm:text-2xl font-bold text-white mb-5 tracking-tight flex items-center gap-2",
+        className:"text-lg sm:text-2xl font-bold text-white mb-4 tracking-tight",
         children:"Browse by network"
       }),
       d.jsx("div",{
-        className:"grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 sm:gap-4",
+        className:"flex flex-row w-full gap-2 sm:gap-4",
         children:networks.map(item=>d.jsxs("div",{
           key:item.id,
           onClick:()=>e&&e(item.id),
-          className:"group relative bg-[#0e1117] hover:bg-[#151922] rounded-2xl p-4 border border-white/10 hover:border-red-500/50 transition-all duration-300 cursor-pointer hover:-translate-y-1 hover:shadow-xl hover:shadow-red-600/10 flex flex-col items-center justify-between min-h-[120px] sm:min-h-[130px]",
+          className:"flex-1 flex flex-col items-center justify-center bg-[#0e1117] hover:bg-[#151922] rounded-lg sm:rounded-2xl p-2 sm:p-4 border border-white/5 hover:border-red-500/50 transition-all duration-300 cursor-pointer hover:-translate-y-1 aspect-square relative group",
           children:[
             d.jsx("div",{
-              className:"flex-1 flex items-center justify-center w-full my-auto",
-              children:item.logo
+              className:"flex-1 flex items-center justify-center w-full min-h-0",
+              children:d.jsx("img",{
+                src:item.logo,
+                alt:item.name,
+                className:"w-full h-full object-contain max-h-[16px] sm:max-h-[50px] filter group-hover:brightness-110 transition-all",
+                referrerPolicy:"no-referrer",
+                loading:"eager",
+                onError: (ev) => {
+                  ev.target.style.display = 'none';
+                  ev.target.nextSibling.style.display = 'flex';
+                }
+              })
             }),
-            d.jsxs("div",{
-              className:"text-[11px] font-medium text-zinc-400 group-hover:text-white transition-colors flex items-center gap-1 mt-2",
-              children:[
-                item.name,
-                d.jsx("span",{className:"text-[10px] text-zinc-500 group-hover:text-red-400 transition-colors",children:"›"})
-              ]
+            /* Fallback Text UI */
+            d.jsx("div",{
+              style: { display: 'none' },
+              className:"absolute inset-0 flex items-center justify-center p-1",
+              children: d.jsx("span", {
+                className: "text-[8px] sm:text-xs font-black text-center text-white uppercase tracking-tighter leading-none",
+                children: item.name
+              })
+            }),
+            d.jsx("span",{
+              className:"hidden sm:block text-[10px] font-semibold text-zinc-500 mt-2 truncate w-full text-center group-hover:text-white transition-colors",
+              children:item.name
             })
           ]
         }))
@@ -685,36 +624,153 @@ const eE=({items:n=[],type:i="movie",isListView:l,setIsListView:r,genres:u=[],on
 };
 
 
+
+
 const tE=({genres:n=[],trending:i=[],type:l="movie",onItemClick:r,onGenreClick:u,onYearClick:h})=>{
-  const topYears=["2026","2025","2024","2023","2022","2021","2020","2019","2018","2017","2016","2015","2014","2013","2012","2011","2010","2005","2000"];
+  const defaultTrending=[
+    {id:"tr1",title:"Avengers: Doomsday",vote_average:0.0,release_date:"2026",poster_path:"/s1K4nI4kYjLsmf1P3Y984h5A13b.jpg"},
+    {id:"tr2",title:"Doing Life",vote_average:6.5,release_date:"2026",poster_path:"/2c1iJ4S1vBf4L9jA4vN1e3b5a7c.jpg"},
+    {id:"tr3",title:"Infirmary",vote_average:5.7,release_date:"2026",poster_path:"/3d2k5J2s3F4G5H6J7K8L9M0N1P.jpg"},
+    {id:"tr4",title:"Verity",vote_average:6.6,release_date:"2026",poster_path:"/4e3l6K3t4G5H6J7K8L9M0N1P2Q.jpg"},
+    {id:"tr5",title:"Digger",vote_average:7.4,release_date:"2026",poster_path:"/5f4m7L4u5H6J7K8L9M0N1P2Q3R.jpg"},
+    {id:"tr6",title:"UNABOMBER",vote_average:6.6,release_date:"2026",poster_path:"/6g5n8M5v6J7K8L9M0N1P2Q3R4S.jpg"}
+  ];
+
+  const trendingList=(i&&i.length>0)?i.slice(0,6):defaultTrending;
+
+  const defaultGenres=[
+    {id:28,name:"Action"},
+    {id:12,name:"Adventure"},
+    {id:16,name:"Animation"},
+    {id:35,name:"Comedy"},
+    {id:80,name:"Crime"},
+    {id:99,name:"Documentary"},
+    {id:18,name:"Drama"},
+    {id:10751,name:"Family"},
+    {id:14,name:"Fantasy"},
+    {id:36,name:"History"},
+    {id:27,name:"Horror"},
+    {id:10402,name:"Music"},
+    {id:9648,name:"Mystery"},
+    {id:10749,name:"Romance"},
+    {id:878,name:"Science Fiction"},
+    {id:10770,name:"TV Movie"},
+    {id:53,name:"Thriller"},
+    {id:10752,name:"War"},
+    {id:37,name:"Western"}
+  ];
+  const genreList=(n&&n.length>0)?n:defaultGenres;
+
+  const topYears=["2030","2029","2028","2027","2026","2025","2024","2023","2022","2021","2020","2019","2018","2017","2016","2015"];
+
   return d.jsxs("div",{
-    className:"space-y-8",
+    className:"space-y-6",
     children:[
+      /* 1. Trending Now Card */
       d.jsxs("div",{
-        className:"bg-zinc-900/60 border border-white/5 rounded-3xl p-6 backdrop-blur-md",
+        className:"bg-[#0f1115] border border-white/5 rounded-3xl p-6 shadow-xl",
         children:[
-          d.jsx("h3",{className:"text-lg font-bold text-white mb-4 border-b border-white/10 pb-3 flex items-center gap-2",children:"Genres"}),
+          d.jsxs("div",{
+            className:"flex items-center justify-between mb-5",
+            children:[
+              d.jsx("h2",{className:"text-xl font-bold text-white tracking-tight",children:"Trending Now"}),
+              d.jsxs("span",{
+                className:"text-[10px] font-bold tracking-widest text-red-500 bg-red-500/10 border border-red-500/20 px-2.5 py-0.5 rounded-full uppercase flex items-center gap-1.5",
+                children:[
+                  d.jsx("span",{className:"w-1.5 h-1.5 rounded-full bg-red-500 animate-ping"}),
+                  "LIVE"
+                ]
+              })
+            ]
+          }),
           d.jsx("div",{
-            className:"flex flex-wrap gap-2",
-            children:n.map(g=>d.jsx("button",{
-              key:g.id,
-              onClick:()=>u&&u(g.id),
-              className:"px-3 py-1.5 rounded-xl bg-zinc-800/80 hover:bg-red-600 text-zinc-300 hover:text-white text-xs font-semibold transition-all border border-white/5 cursor-pointer hover:scale-105",
+            className:"space-y-3",
+            children:trendingList.map((item,index)=>{
+              const rank=index+1;
+              const posterUrl=item.poster_path
+                ? (item.poster_path.startsWith('http') ? item.poster_path : `/api/image-proxy?path=${encodeURIComponent(item.poster_path)}&size=w300`)
+                : 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=300&auto=format&fit=crop&q=80';
+              const year=(item.release_date || item.first_air_date || '2026').toString().slice(0,4);
+              const rating=(typeof item.vote_average === 'number' ? item.vote_average : 6.5).toFixed(1);
+
+              return d.jsxs("div",{
+                key:item.id||index,
+                onClick:()=>r&&r(item),
+                className:"flex items-center gap-3.5 p-2 rounded-2xl hover:bg-white/5 transition-all cursor-pointer group border border-transparent hover:border-white/5",
+                children:[
+                  d.jsxs("div",{
+                    className:"relative shrink-0 w-12 h-16 rounded-xl overflow-hidden bg-zinc-800 border border-white/10 shadow-md",
+                    children:[
+                      d.jsx("img",{
+                        src:posterUrl,
+                        alt:item.title||item.name||"Trending",
+                        className:"w-full h-full object-cover group-hover:scale-110 transition-transform duration-300",
+                        loading:"lazy"
+                      }),
+                      d.jsx("div",{
+                        className:"absolute top-0 left-0 bg-red-600 text-white font-extrabold text-[10px] w-5 h-5 rounded-br-lg flex items-center justify-center shadow-md",
+                        children:rank
+                      })
+                    ]
+                  }),
+                  d.jsxs("div",{
+                    className:"flex-1 min-w-0",
+                    children:[
+                      d.jsx("h3",{
+                        className:"text-sm font-bold text-white group-hover:text-red-400 transition-colors truncate tracking-tight",
+                        children:item.title||item.name||"Untitled"
+                      }),
+                      d.jsxs("div",{
+                        className:"flex items-center gap-2 mt-1 text-xs text-zinc-400 font-medium",
+                        children:[
+                          d.jsxs("span",{
+                            className:"text-amber-400 flex items-center gap-1 font-semibold",
+                            children:[
+                              d.jsx("span",{children:"★"}),
+                              rating
+                            ]
+                          }),
+                          d.jsx("span",{className:"text-zinc-600",children:"·"}),
+                          d.jsx("span",{children:year})
+                        ]
+                      })
+                    ]
+                  })
+                ]
+              });
+            })
+          })
+        ]
+      }),
+
+      /* 2. Genres Card */
+      d.jsxs("div",{
+        className:"bg-[#0f1115] border border-white/5 rounded-3xl p-6 shadow-xl",
+        children:[
+          d.jsx("h2",{className:"text-xl font-bold text-white mb-5 tracking-tight",children:"Genres"}),
+          d.jsx("div",{
+            className:"flex flex-wrap gap-2.5",
+            children:genreList.map(g=>d.jsx("button",{
+              key:g.id||g.name,
+              onClick:()=>u&&u(g.id||g.name),
+              className:"px-4 py-2 rounded-xl bg-[#1c1f26] hover:bg-red-600 text-zinc-300 hover:text-white text-xs font-semibold transition-all border border-white/5 cursor-pointer hover:scale-105 active:scale-95 shadow-sm",
               children:g.name
             }))
           })
         ]
       }),
+
+      /* 3. Release Year Card */
       d.jsxs("div",{
-        className:"bg-zinc-900/60 border border-white/5 rounded-3xl p-6 backdrop-blur-md",
+        className:"bg-[#0f1115] border border-white/5 rounded-3xl p-6 shadow-xl",
         children:[
-          d.jsx("h3",{className:"text-lg font-bold text-white mb-4 border-b border-white/10 pb-3",children:"Release Years"}),
+          d.jsx("h2",{className:"text-xl font-bold text-white mb-5 tracking-tight",children:"Release Year"}),
           d.jsx("div",{
-            className:"flex flex-wrap gap-2",
+            className:"grid grid-cols-2 gap-3",
             children:topYears.map(y=>d.jsx("button",{
               key:y,
               onClick:()=>h&&h(y),
-              className:"px-3.5 py-1.5 rounded-xl bg-zinc-800/80 hover:bg-red-600 text-zinc-300 hover:text-white text-xs font-semibold transition-all border border-white/5 cursor-pointer hover:scale-105",
+              className:"w-full py-3 px-4 rounded-xl bg-[#1c1f26] hover:bg-red-600 text-zinc-300 hover:text-white text-sm font-semibold transition-all border border-white/5 cursor-pointer text-center hover:scale-[1.02] active:scale-95 shadow-sm",
               children:y
             }))
           })

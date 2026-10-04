@@ -424,18 +424,9 @@ body {
 }
 
 /* Floating transparent header */
-.nav-floating-hero {
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.4) 60%, transparent 100%) !important;
-  border-bottom: 1px solid transparent !important;
-  box-shadow: none !important;
-}
+.nav-floating-hero { background: transparent !important; border-bottom: none !important; box-shadow: none !important; }
 
-.nav-scrolled {
-  background: rgba(9, 9, 11, 0.95) !important;
-  backdrop-filter: blur(20px) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8) !important;
-}
+.nav-scrolled { background: rgba(9, 9, 11, 0.6) !important; backdrop-filter: blur(16px) !important; -webkit-backdrop-filter: blur(16px) !important; border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important; box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important; }
 
 /* NOW PLAYING ON VIDARA Cinematic Badge */
 .now-playing-badge {
@@ -545,3 +536,75 @@ body {
 }
 
 
+
+.media-carousel-scroll {
+  display: flex !important;
+  gap: 1.5rem !important;
+  overflow-x: auto !important;
+  scroll-snap-type: x mandatory !important;
+  scroll-behavior: smooth !important;
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+}
+.media-carousel-scroll::-webkit-scrollbar {
+  display: none !important;
+}
+.media-carousel-card {
+  flex: 0 0 calc((100% - (4 * 1.5rem)) / 5) !important;
+  scroll-snap-align: start !important;
+  min-width: calc((100% - (4 * 1.5rem)) / 5) !important;
+}
+@media (max-width: 1024px) {
+  .media-carousel-card {
+    flex: 0 0 calc((100% - (2 * 1rem)) / 3) !important;
+    min-width: calc((100% - (2 * 1rem)) / 3) !important;
+  }
+}
+@media (max-width: 640px) {
+  .media-carousel-card {
+    flex: 0 0 calc((100% - 1rem) / 2) !important;
+    min-width: calc((100% - 1rem) / 2) !important;
+  }
+}
+
+.media-carousel-scroll {
+  display: flex !important;
+  gap: 1.25rem !important;
+  overflow-x: auto !important;
+  scroll-snap-type: x mandatory !important;
+  scroll-behavior: smooth !important;
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+}
+.media-carousel-scroll::-webkit-scrollbar {
+  display: none !important;
+}
+.media-carousel-card {
+  flex: 0 0 calc((100% - (6 * 1.25rem)) / 7) !important;
+  scroll-snap-align: start !important;
+  min-width: calc((100% - (6 * 1.25rem)) / 7) !important;
+}
+@media (max-width: 1400px) {
+  .media-carousel-card {
+    flex: 0 0 calc((100% - (4 * 1rem)) / 5) !important;
+    min-width: calc((100% - (4 * 1rem)) / 5) !important;
+  }
+}
+@media (max-width: 1024px) {
+  .media-carousel-card {
+    flex: 0 0 calc((100% - (2 * 1rem)) / 3) !important;
+    min-width: calc((100% - (2 * 1rem)) / 3) !important;
+  }
+}
+@media (max-width: 640px) {
+  .media-carousel-card {
+    flex: 0 0 calc((100% - 0.75rem) / 2) !important;
+    min-width: calc((100% - 0.75rem) / 2) !important;
+  }
+}
+
+@media (min-width: 1536px) {
+  .media-grid-container {
+    grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+  }
+}
