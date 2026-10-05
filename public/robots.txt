@@ -1,8 +1,17 @@
+# Cineflex Robots.txt - Search Engine Crawling Guidelines
 User-agent: Googlebot
 Allow: /
+Disallow: /api/
+Disallow: /account
+Disallow: /admin
+Disallow: /reset-password
 
 User-agent: Bingbot
 Allow: /
+Disallow: /api/
+Disallow: /account
+Disallow: /admin
+Disallow: /reset-password
 
 User-agent: Twitterbot
 Allow: /
@@ -12,3 +21,9 @@ Allow: /
 
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /account
+Disallow: /admin
+Disallow: /reset-password
+
+Sitemap: https://cineflex.eu.cc/sitemap.xml

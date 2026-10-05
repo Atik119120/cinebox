@@ -153,8 +153,10 @@ body {
   inset: 0 !important;
   width: 100% !important;
   height: 100% !important;
+  object-fit: cover !important;
+  object-position: top center !important;
   background-size: cover !important;
-  background-position: center top !important;
+  background-position: top center !important;
   background-repeat: no-repeat !important;
 }
 
