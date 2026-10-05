@@ -3,32 +3,56 @@
     "id": 1,
     "title": "About Cineflex",
     "slug": "about-us",
-    "content": "Welcome to Cineflex! We offer a rich catalog of movies and television series streamed in ultra-high fidelity.",
+    "content": "<h3>Welcome to Cineflex</h3><p>Cineflex is a next-generation streaming entertainment portal dedicated to providing film enthusiasts worldwide with frictionless, ultra-high-definition streaming across all modern devices.</p><h4>Our Mission</h4><p>We believe in high-speed, accessible cinematic content. Our platform integrates multi-mirror failover networks ensuring zero downtime, low latency buffering, and high-definition video playback including 4K and 1080p with Dolby 5.1 spatial audio compatibility.</p><h4>Multi-Server Infrastructure</h4><p>With more than 9 distributed external playback nodes (VIDOUT, Cineverse, GD mirror, Vidsync, Bingr, Filmu, VidBolt, VidLink, AutoEmbed), users can always find an ultra-fast streaming source regardless of their geographic location.</p>",
     "menu_location": "explore",
     "order_index": 0
   },
   {
     "id": 2,
-    "title": "Trending Guide",
-    "slug": "trending-guide",
-    "content": "Discover the most popular movies and shows updated weekly based on audience viewership worldwide.",
-    "menu_location": "explore",
-    "order_index": 1
+    "title": "DMCA & Copyright",
+    "slug": "dmca",
+    "content": "<h3>DMCA & Copyright Compliance Policy</h3><p><strong>Cineflex respects intellectual property rights and adheres strictly to the Digital Millennium Copyright Act (DMCA).</strong></p><h4>Third-Party Content Disclaimer</h4><p>Cineflex does not host, upload, maintain, or store any video files, media, or proprietary streams on its servers. All movies, TV shows, and video embeds presented on this website are aggregated and scraped from publicly available, non-affiliated third-party media hosting services (such as Vidout, Cloudflare Stream, Openload, Streamtape, Rapidvideo, and other external CDN providers).</p><h4>Takedown Requests</h4><p>Because Cineflex possesses no direct control over external hosting servers, copyright holders requesting content removal should issue notices directly to the hosting provider hosting the source media file. If you wish to have third-party links removed from our search index, please submit a formal DMCA notice with authorized proof of ownership to our compliance team.</p>",
+    "menu_location": "support",
+    "order_index": 0
   },
   {
     "id": 3,
     "title": "Terms of Service",
     "slug": "terms-of-service",
-    "content": "These terms govern your use of the Cineflex streaming platform. Enjoy streaming responsibly!",
+    "content": "<h3>Terms of Service</h3><p>By accessing or utilizing Cineflex, you agree to comply with and be bound by the following terms of use:</p><h4>1. Acceptance of Terms</h4><p>Cineflex is provided solely for personal, non-commercial entertainment and indexing purposes. By browsing this platform, you affirm that you are of legal age in your jurisdiction or have parental permission.</p><h4>2. External Third-Party Links</h4><p>Our website contains links and embeds to external websites and media players. We do not endorse, inspect, or assume responsibility for content, privacy policies, or practices of any third-party websites.</p><h4>3. Service Modifications</h4><p>Cineflex reserves the right to modify, suspend, or discontinue any feature, server node, or catalog section at any time without prior notice.</p>",
     "menu_location": "support",
-    "order_index": 0
+    "order_index": 1
   },
   {
     "id": 4,
     "title": "Privacy Policy",
     "slug": "privacy-policy",
-    "content": "We respect your privacy. No personal data is sold or shared with unauthorized third parties.",
+    "content": "<h3>Privacy & Data Policy</h3><p>Your privacy is important to us. This policy details how information is handled on Cineflex:</p><h4>No Required Registration</h4><p>You can browse, search, and stream content completely anonymously without registering an account or entering sensitive billing information.</p><h4>Local Storage & Cookies</h4><p>We use localized browser storage (HTML5 LocalStorage) purely to maintain your preferences, such as your customized Watchlist and resume playback timestamps. No personal identification data is collected or sold to advertisers.</p><h4>Third-Party Services</h4><p>External embedded video players may deploy cookies or scripts subject to their individual privacy practices. We recommend using privacy-focused browser extensions when streaming.</p>",
     "menu_location": "support",
+    "order_index": 2
+  },
+  {
+    "id": 5,
+    "title": "Contact & Support",
+    "slug": "contact-us",
+    "content": "<h3>Contact & Community Support</h3><p>Need assistance or have feedback for the Cineflex team? We are active daily across our official community channels:</p><ul><li><strong>Telegram Community:</strong> <a href=\"https://t.me/bdBeginner\" target=\"_blank\">t.me/bdBeginner</a> — Instant announcements, server status updates & title requests.</li><li><strong>WhatsApp Support:</strong> <a href=\"https://wa.me/8801677272090\" target=\"_blank\">+880 1677 272090</a> — Fast inquiry assistance.</li><li><strong>YouTube Channel:</strong> <a href=\"https://www.youtube.com/@bdBeginner\" target=\"_blank\">@bdBeginner</a> — Tutorials and feature showcases.</li></ul>",
+    "menu_location": "support",
+    "order_index": 3
+  },
+  {
+    "id": 6,
+    "title": "Streaming FAQ",
+    "slug": "faq",
+    "content": "<h3>Frequently Asked Questions</h3><h4>1. Why is a video buffering or failing to load?</h4><p>If a video player shows a black screen or loads slowly, click on another server from the <strong>Choose Server</strong> bar (such as #1 VIDOUT, #2 Cineverse, or #3 GD mirror). Each server utilizes independent CDN routes.</p><h4>2. How do I change audio language or subtitles?</h4><p>Most of our primary servers (including VIDOUT and Cineverse) contain built-in CC subtitle selectors and audio track switches directly inside the video player controls.</p><h4>3. Is Cineflex completely free?</h4><p>Yes! Cineflex does not charge any subscription or access fees. All titles and high-speed streaming servers are free for all visitors.</p>",
+    "menu_location": "support",
+    "order_index": 4
+  },
+  {
+    "id": 7,
+    "title": "Trending Guide",
+    "slug": "trending-guide",
+    "content": "<h3>Discover Trending Movies & Shows</h3><p>Our catalog is refreshed in real-time using worldwide TMDB audience metrics, tracking box office hits, viral streaming releases, and critical acclaim across OTT platforms including Netflix, Prime Video, Disney+, Apple TV+, and HBO.</p>",
+    "menu_location": "explore",
     "order_index": 1
   }
 ]
