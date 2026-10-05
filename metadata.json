@@ -1,7 +1,0 @@
-{
-  "name": "CineBox - Stream Movies & TV Shows",
-  "description": "Stream the latest movies and TV shows in high definition with CineBox. Explore trending titles, search catalog, manage watchlists, and customize platform settings.",
-  "capabilities": [
-    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
-  ]
-}
