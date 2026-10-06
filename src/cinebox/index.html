@@ -1178,6 +1178,12 @@
 
         /* Keep body content from being hidden behind fixed bottom bar */
         body { padding-bottom: calc(58px + env(safe-area-inset-bottom)) !important; }
+        main {
+          padding-bottom: 0 !important;
+        }
+        aside, aside > div {
+          margin-bottom: 0 !important;
+        }
         main, main > div, main section > div, #root > div > div:not(nav) {
           padding-left: 0 !important; padding-right: 0 !important;
         }
@@ -1248,6 +1254,12 @@
       }
 
 
+      @media (min-width: 768px) {
+        main {
+          padding-bottom: 24px !important;
+        }
+      }
+
       /* ========================================================
          MULTIMOVIES AUTHENTIC CLEAN FOOTER LAYOUT
          ======================================================== */
@@ -1257,7 +1269,7 @@
         position: relative;
         overflow: hidden;
         color: #94a3b8;
-        margin-top: 60px;
+        margin-top: 32px;
         box-shadow: none !important;
       }
       .cine-footer-root::before,
@@ -1420,18 +1432,33 @@
         border-color: rgba(255, 255, 255, 0.2);
       }
 
-      @media (max-width: 640px) {
+      @media (max-width: 767px) {
+        .cine-footer-root {
+          margin-top: 14px !important;
+        }
         .cine-footer-container {
-          padding: 32px 16px 20px;
+          padding: 16px 16px 20px !important;
+        }
+        .cine-footer-logo-wrap {
+          margin-bottom: 12px !important;
+        }
+        .cine-footer-note {
+          margin-bottom: 14px !important;
+        }
+        .cine-footer-line {
+          margin-bottom: 14px !important;
         }
         .cine-footer-links-row {
-          gap: 18px;
+          gap: 16px !important;
+          margin-bottom: 14px !important;
         }
         .cine-footer-bottom-bar {
+          margin-top: 10px !important;
+          padding-top: 14px !important;
           flex-direction: column;
           align-items: center;
           text-align: center;
-          gap: 14px;
+          gap: 12px;
         }
         .cine-footer-bottom-left {
           justify-content: center;
