@@ -207,7 +207,7 @@ export const CONTENT_SECURITY_POLICY = [
   "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com",
   "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com data:",
-  "img-src 'self' data: blob: https://image.tmdb.org https://images.unsplash.com https://*.tmdb.org https://*.supabase.co https://*.cloudflare.com https://*.googleusercontent.com https://*.githubusercontent.com",
+  "img-src 'self' data: blob: https://image.tmdb.org https://images.unsplash.com https://*.tmdb.org https://*.supabase.co https://*.cloudflare.com https://*.googleusercontent.com https://*.githubusercontent.com https://upload.wikimedia.org https://*.wikimedia.org",
   "media-src 'self' blob: https:",
   "connect-src 'self' https://api.themoviedb.org https://image.tmdb.org https://*.supabase.co https://ipapi.co https://*.cloudflare.com https://api.ipwho.is",
   "frame-src 'self' https:",

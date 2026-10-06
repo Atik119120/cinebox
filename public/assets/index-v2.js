@@ -711,14 +711,14 @@ function WA({items:n,type:i,onPlayClick:l,onInfoClick:r}){
 
 const NetworkSection=({onNetworkClick:e})=>{
   const networks=[
-    { id:"netflix", name:"Netflix", logo: "https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" },
-    { id:"amazon-prime", name:"Prime Video", logo: "https://upload.wikimedia.org/wikipedia/commons/f/f1/Prime_Video.png" },
-    { id:"jio-hotstar", name:"Hotstar", logo: "https://upload.wikimedia.org/wikipedia/commons/1/1e/Disney%2B_Hotstar_logo.svg" },
-    { id:"jiocinema", name:"JioCinema", logo: "https://upload.wikimedia.org/wikipedia/commons/1/14/Jiocinema.png" },
-    { id:"crunchyroll", name:"Crunchyroll", logo: "https://upload.wikimedia.org/wikipedia/commons/f/f6/Crunchyroll_Logo.svg" },
-    { id:"mx-player", name:"MX Player", logo: "https://upload.wikimedia.org/wikipedia/commons/b/b1/MX_Player_Logo.svg" },
-    { id:"sony-liv", name:"Sony LIV", logo: "https://upload.wikimedia.org/wikipedia/commons/f/f7/SonyLIV_2020.png" },
-    { id:"zee5", name:"Zee5", logo: "https://upload.wikimedia.org/wikipedia/commons/6/6e/ZEE5_2025.svg" }
+    { id:"netflix", name:"Netflix", logo: "/assets/img/networks/netflix.svg" },
+    { id:"amazon-prime", name:"Prime Video", logo: "/assets/img/networks/amazon-prime.svg" },
+    { id:"jio-hotstar", name:"Hotstar", logo: "/assets/img/networks/disney-hotstar.png" },
+    { id:"jiocinema", name:"JioCinema", logo: "/assets/img/networks/jio-ott.svg" },
+    { id:"crunchyroll", name:"Crunchyroll", logo: "/assets/img/networks/crunchyroll.svg" },
+    { id:"mx-player", name:"MX Player", logo: "/assets/img/networks/mx-player.svg" },
+    { id:"sony-liv", name:"Sony LIV", logo: "/assets/img/networks/sony-liv.png" },
+    { id:"zee5", name:"Zee5", logo: "/assets/img/networks/zee-5.svg" }
   ];
 
   return d.jsxs("div",{
@@ -742,7 +742,7 @@ const NetworkSection=({onNetworkClick:e})=>{
               children:d.jsx("img",{
                 src:item.logo,
                 alt:item.name,
-                className:"w-full h-full object-contain max-h-[16px] sm:max-h-[50px] filter group-hover:brightness-110 transition-all",
+                className:"w-full h-full object-contain max-h-[36px] sm:max-h-[50px] filter group-hover:brightness-110 transition-all",
                 referrerPolicy:"no-referrer",
                 loading:"eager",
                 onError: (ev) => {
