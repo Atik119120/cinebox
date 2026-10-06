@@ -134,7 +134,7 @@ export async function renderSeoPage(pathname: string): Promise<{ html: string; s
 
     const prerenderBlock = `
     <!-- Crawlable Pre-rendered Content for Search Engines -->
-    <section id="cine-seo-prerender" class="cine-seo-crawler-content">
+    <section id="cine-seo-prerender" class="cine-seo-crawler-content" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;pointer-events:none;opacity:0;visibility:hidden;">
       <article>
         <h1>${escapeHtml(title)}${year ? ` (${year})` : ""}</h1>
         <p>${escapeHtml(overview)}</p>
@@ -231,7 +231,7 @@ export async function renderSeoPage(pathname: string): Promise<{ html: string; s
 
     const prerenderBlock = `
     <!-- Crawlable Pre-rendered Content for Search Engines -->
-    <section id="cine-seo-prerender" class="cine-seo-crawler-content">
+    <section id="cine-seo-prerender" class="cine-seo-crawler-content" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;pointer-events:none;opacity:0;visibility:hidden;">
       <article>
         <h1>${escapeHtml(title)}${year ? ` (${year})` : ""}</h1>
         <p>${escapeHtml(overview)}</p>
@@ -307,7 +307,7 @@ export async function renderSeoPage(pathname: string): Promise<{ html: string; s
 
     const prerenderBlock = `
     <!-- Crawlable Pre-rendered Content -->
-    <section id="cine-seo-prerender" class="cine-seo-crawler-content">
+    <section id="cine-seo-prerender" class="cine-seo-crawler-content" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;pointer-events:none;opacity:0;visibility:hidden;">
       <article>
         <h1>${escapeHtml(info.title)}</h1>
         <p>${escapeHtml(info.desc)}</p>
@@ -353,7 +353,7 @@ export async function renderSeoPage(pathname: string): Promise<{ html: string; s
 
     const prerenderBlock = `
     <!-- Crawlable Pre-rendered Content -->
-    <section id="cine-seo-prerender" class="cine-seo-crawler-content">
+    <section id="cine-seo-prerender" class="cine-seo-crawler-content" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;pointer-events:none;opacity:0;visibility:hidden;">
       <article>
         <h1>${escapeHtml(info.title)}</h1>
         <p>${escapeHtml(info.desc)}</p>
@@ -410,7 +410,7 @@ export async function renderSeoPage(pathname: string): Promise<{ html: string; s
 
   const homePrerenderBlock = `
   <!-- Crawlable Pre-rendered Content -->
-  <section id="cine-seo-prerender" class="cine-seo-crawler-content">
+  <section id="cine-seo-prerender" class="cine-seo-crawler-content" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;pointer-events:none;opacity:0;visibility:hidden;">
     <header>
       <h1>Cineflex — Free High Definition Streaming Hub</h1>
       <p>Watch trending movies, popular TV shows, anime series, and OTT network originals with 10 high-speed servers.</p>

@@ -133,7 +133,7 @@ body {
   height: 92vh !important;
   min-height: 620px !important;
   max-height: 980px !important;
-  margin-top: -6rem !important;
+  margin-top: 0 !important;
   margin-bottom: 2.5rem !important;
   overflow: hidden !important;
   background-color: #09090b !important;
@@ -143,7 +143,7 @@ body {
   .hero-multimovies-wrapper {
     height: 82vh !important;
     min-height: 520px !important;
-    margin-top: -4.5rem !important;
+    margin-top: 0 !important;
     margin-bottom: 1.5rem !important;
   }
 }
@@ -610,3 +610,599 @@ body {
     grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
   }
 }
+
+/* ========================================================
+   CINEBOX COMPACT CORNER SERVER DROPDOWN SYSTEM
+   ======================================================== */
+.server-switcher-box {
+  width: 100%;
+  max-width: 460px;
+  margin: 0 0 16px 0;
+  padding: 12px 14px 12px;
+  background: rgba(14, 14, 18, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  position: relative !important;
+  overflow: visible !important;
+  z-index: 45 !important;
+  box-sizing: border-box;
+}
+.server-switcher-box::before {
+  display: none !important;
+}
+
+.server-strip-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 9px;
+}
+.server-strip-heading-left {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.server-strip-icon {
+  color: #ffffff;
+  font-size: 13px;
+  opacity: 0.9;
+}
+.server-heading-title {
+  font-size: 11px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.server-strip-count {
+  font-size: 11px;
+  font-weight: 500;
+  color: #71717a;
+  margin-left: 1px;
+}
+.server-ultra-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 9.5px;
+  font-weight: 700;
+  color: #d4d4d8;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.server-ultra-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #71717a;
+}
+
+/* Dropdown Container & Trigger */
+.server-dropdown-container {
+  position: relative;
+  width: 100%;
+  z-index: 55;
+}
+.server-dropdown-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 12px;
+  background: rgba(20, 20, 24, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 10px;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.16s ease;
+  text-align: left;
+  user-select: none;
+  outline: none;
+  box-sizing: border-box;
+}
+.server-dropdown-trigger:hover {
+  background: rgba(26, 26, 32, 0.98);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+.server-dropdown-trigger.is-open {
+  border-color: rgba(255, 255, 255, 0.25) !important;
+  background: rgba(26, 26, 32, 1) !important;
+}
+.server-dropdown-trigger-left {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.server-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #71717a;
+  flex-shrink: 0;
+}
+.server-dot.active {
+  background: #e4e4e7;
+}
+.server-num {
+  font-size: 13px;
+  font-weight: 500;
+  color: #a1a1aa;
+}
+.server-name {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+.server-badge {
+  font-size: 9.5px;
+  font-weight: 700;
+  color: #a1a1aa;
+  padding: 1px 5px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+.server-active-pill {
+  font-size: 9px;
+  font-weight: 800;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.14);
+  padding: 2px 7px;
+  border-radius: 9999px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+.server-dropdown-trigger-right {
+  display: inline-flex;
+  align-items: center;
+  color: #a1a1aa;
+  flex-shrink: 0;
+}
+.server-dropdown-arrow {
+  color: #a1a1aa;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.server-dropdown-arrow.rotated {
+  transform: rotate(180deg);
+}
+
+/* Dropdown Menu */
+.server-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: #0e0e12;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 5px;
+  max-height: 300px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  animation: dropdownSlideIn 0.16s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.server-dropdown-menu::-webkit-scrollbar {
+  width: 5px;
+}
+.server-dropdown-menu::-webkit-scrollbar-track {
+  background: transparent;
+}
+.server-dropdown-menu::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+}
+.server-dropdown-menu::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+.server-dropdown-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 10px;
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: #cbd5e1;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.14s ease;
+  text-align: left;
+  user-select: none;
+  outline: none;
+  box-sizing: border-box;
+}
+.server-dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: #ffffff;
+}
+.server-dropdown-item.selected {
+  background: rgba(255, 255, 255, 0.09) !important;
+  color: #ffffff !important;
+}
+.server-item-left {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.server-item-right {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.server-online-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #71717a;
+}
+.server-dropdown-item.selected .server-online-dot {
+  background: #a1a1aa;
+}
+.server-online-text {
+  font-size: 9.5px;
+  font-weight: 700;
+  color: #71717a;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.server-dropdown-item.selected .server-online-text {
+  color: #a1a1aa;
+}
+
+/* MultiMovies Watch Page Frame & Master Alignment */
+.cine-watch-frame {
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: 0 24px !important;
+}
+.cine-watch-frame > div {
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  width: 100% !important;
+  aspect-ratio: 16 / 9 !important;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.85) !important;
+}
+
+/* MultiMovies Watch Page 2-Column Side-Aligned Layout */
+.cine-watch-meta-layout {
+  max-width: 1200px !important;
+  margin: 20px auto 16px !important;
+  padding: 0 24px !important;
+  display: flex !important;
+  gap: 22px !important;
+  align-items: flex-start !important;
+  box-sizing: border-box !important;
+}
+
+/* Left Column: Movie / Series Poster */
+.cine-watch-poster-column {
+  flex: 0 0 185px !important;
+  width: 185px !important;
+  position: relative !important;
+}
+.cine-watch-poster-card {
+  position: relative !important;
+  width: 100% !important;
+  aspect-ratio: 2 / 3 !important;
+  border-radius: 14px !important;
+  overflow: hidden !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.14) !important;
+  background: rgba(18, 22, 34, 0.95) !important;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.05) !important;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease !important;
+}
+.cine-watch-poster-card:hover {
+  transform: translateY(-2px) scale(1.02) !important;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.85), 0 0 24px rgba(239, 68, 68, 0.28) !important;
+  border-color: rgba(239, 68, 68, 0.55) !important;
+}
+.cine-watch-poster-img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+}
+.cine-watch-poster-badge {
+  position: absolute !important;
+  bottom: 8px !important;
+  right: 8px !important;
+  background: rgba(0, 0, 0, 0.85) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  padding: 3px 8px !important;
+  border-radius: 6px !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  color: #ffffff !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Right Column: Server Switcher & Content Info */
+.cine-watch-content-column {
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 14px !important;
+}
+.cine-watch-content-column .server-switcher-box {
+  width: 100% !important;
+  max-width: 440px !important;
+  margin: 0 0 16px 0 !important;
+  box-sizing: border-box !important;
+}
+.cine-watch-content-column .playing-episode-info {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 4px 0 0 !important;
+  box-sizing: border-box !important;
+}
+.cine-watch-info-meta-row {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex-wrap: wrap !important;
+  margin-bottom: 6px !important;
+}
+.cine-watch-meta-pill {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  color: #cbd5e1 !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  padding: 2px 7px !important;
+  border-radius: 5px !important;
+}
+.cine-watch-genres-text {
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: #94a3b8 !important;
+  margin-top: 8px !important;
+  letter-spacing: 0.02em !important;
+}
+
+/* TV Episode Navigator & Episodes List Master Alignment */
+.ep-navigator-bar {
+  max-width: 1200px !important;
+  margin: 18px auto !important;
+  box-sizing: border-box !important;
+}
+.cinejoy-episodes-section {
+  max-width: 1200px !important;
+  margin: 20px auto !important;
+  box-sizing: border-box !important;
+}
+
+@media (max-width: 768px) {
+  .cine-watch-meta-layout {
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+  .cine-watch-poster-column {
+    display: none !important;
+  }
+}
+
+
+/* ========================================================
+   CINEFLEX CENTER-ALIGNED CLEAN FOOTER SYSTEM
+   ======================================================== */
+.cine-footer-root {
+  background: #000000 !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+  position: relative;
+  overflow: hidden;
+  color: #94a3b8;
+  margin-top: 60px;
+  box-shadow: none !important;
+}
+.cine-footer-root::before,
+.cine-footer-root::after {
+  display: none !important;
+}
+
+/* Container: Middle Aligned */
+.cine-footer-container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 44px var(--cine-gutter, 24px) 28px;
+  text-align: center !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
+
+/* Brand Logo: Bigger & Centered */
+.cine-footer-logo-wrap {
+  margin-bottom: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cine-footer-brand-logo {
+  height: 56px !important;
+  max-height: 62px !important;
+  max-width: 280px !important;
+  width: auto !important;
+  object-fit: contain;
+  filter: none !important;
+  transition: transform 0.25s ease;
+}
+.cine-footer-brand-logo:hover {
+  transform: scale(1.04);
+}
+
+/* Subtitle / Note: White & Centered */
+.cine-footer-note {
+  color: #f1f5f9 !important;
+  font-size: 13px !important;
+  line-height: 1.68 !important;
+  max-width: 860px !important;
+  margin: 0 auto 18px !important;
+  text-align: center !important;
+  font-weight: 400 !important;
+  letter-spacing: -0.01em !important;
+  opacity: 0.92;
+}
+
+/* Divider Line: Centered */
+.cine-footer-line {
+  height: 1px;
+  width: 100%;
+  max-width: 860px;
+  background: rgba(255, 255, 255, 0.12);
+  margin: 0 auto 18px !important;
+}
+
+/* Horizontal Clean Links Row: Centered */
+.cine-footer-links-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center !important;
+  gap: 28px;
+  margin: 0 auto 18px !important;
+}
+.cine-footer-links-row button {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  color: #cbd5e1 !important;
+  font-size: 13.5px !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  transition: color 0.15s ease !important;
+  outline: none !important;
+  font-family: inherit !important;
+}
+.cine-footer-links-row button:hover {
+  color: #ffffff !important;
+  text-decoration: underline !important;
+}
+
+/* Bottom Bar: Centered */
+.cine-footer-bottom-bar {
+  margin-top: 14px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  width: 100%;
+  max-width: 860px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.cine-footer-bottom-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.cine-footer-since {
+  color: #94a3b8;
+  font-size: 12.5px;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 2.5px 9px;
+  border-radius: 5px;
+}
+.cine-footer-copyright {
+  color: #94a3b8;
+  font-size: 12.5px;
+  font-weight: 400;
+}
+.cine-footer-bottom-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.cine-footer-powered-by {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #64748b;
+  font-size: 11.5px;
+  font-weight: 500;
+}
+.cine-footer-partner-img {
+  height: 18px;
+  object-fit: contain;
+  opacity: 0.85;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.cine-footer-powered-by:hover .cine-footer-partner-img {
+  opacity: 1;
+  transform: scale(1.05);
+}
+.cine-footer-back-to-top {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.cine-footer-back-to-top:hover {
+  background: #27272a;
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 640px) {
+  .cine-footer-container {
+    padding: 32px 16px 20px;
+  }
+  .cine-footer-links-row {
+    gap: 18px;
+  }
+  .cine-footer-bottom-bar {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 14px;
+  }
+  .cine-footer-bottom-left {
+    justify-content: center;
+  }
+  .cine-footer-bottom-actions {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+
+
