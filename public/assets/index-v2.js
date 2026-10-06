@@ -294,6 +294,9 @@ const getCineRegion = () => {
 const fetchRegionalTrending = async (mediaType = "movie", page = 1) => {
   const region = getCineRegion();
   const today = new Date().toISOString().split("T")[0];
+  const currentYear = new Date().getFullYear();
+  const minYear = currentYear - 3;
+  const minDate = `${minYear}-01-01`;
   const type = mediaType === "tv" ? "tv" : "movie";
   const dateField = type === "movie" ? "primary_release_date" : "first_air_date";
   try {
@@ -301,42 +304,43 @@ const fetchRegionalTrending = async (mediaType = "movie", page = 1) => {
       const [viralDayRes, nowPlayingRes, hollywoodRes, bollywoodRes, doraemonRes, dubbedActionRes, southRes] = await Promise.all([
         me.get(mt + "/trending/movie/day?api_key=" + ht).catch(() => ({ data: { results: [] } })),
         me.get(mt + "/movie/now_playing?api_key=" + ht + "&page=" + page).catch(() => ({ data: { results: [] } })),
-        me.get(mt + "/discover/movie?api_key=" + ht + "&with_original_language=en&sort_by=popularity.desc&" + dateField + ".lte=" + today + "&vote_count.gte=25&include_adult=false&page=" + page).catch(() => ({ data: { results: [] } })),
-        me.get(mt + "/discover/movie?api_key=" + ht + "&with_original_language=hi&sort_by=popularity.desc&" + dateField + ".lte=" + today + "&vote_count.gte=5&include_adult=false&page=" + page).catch(() => ({ data: { results: [] } })),
+        me.get(mt + "/discover/movie?api_key=" + ht + "&with_original_language=en&primary_release_date.gte=" + minDate + "&primary_release_date.lte=" + today + "&sort_by=popularity.desc&vote_count.gte=25&include_adult=false&page=" + page).catch(() => ({ data: { results: [] } })),
+        me.get(mt + "/discover/movie?api_key=" + ht + "&with_original_language=hi&primary_release_date.gte=" + minDate + "&primary_release_date.lte=" + today + "&sort_by=popularity.desc&vote_count.gte=5&include_adult=false&page=" + page).catch(() => ({ data: { results: [] } })),
         me.get(mt + "/search/movie?api_key=" + ht + "&query=Doraemon").catch(() => ({ data: { results: [] } })),
-        me.get(mt + "/discover/movie?api_key=" + ht + "&with_original_language=en&with_genres=28,878,12,16&sort_by=popularity.desc&" + dateField + ".lte=" + today + "&vote_count.gte=30&include_adult=false&page=" + (page === 1 ? 2 : page + 1)).catch(() => ({ data: { results: [] } })),
-        me.get(mt + "/discover/movie?api_key=" + ht + "&with_original_language=te|ta|ml|kn&sort_by=popularity.desc&" + dateField + ".lte=" + today + "&vote_count.gte=10&include_adult=false&page=" + page).catch(() => ({ data: { results: [] } }))
+        me.get(mt + "/discover/movie?api_key=" + ht + "&with_original_language=en&with_genres=28,878,12,16&primary_release_date.gte=" + minDate + "&primary_release_date.lte=" + today + "&sort_by=popularity.desc&vote_count.gte=30&include_adult=false&page=" + (page === 1 ? 2 : page + 1)).catch(() => ({ data: { results: [] } })),
+        me.get(mt + "/discover/movie?api_key=" + ht + "&with_original_language=te|ta|ml|kn&primary_release_date.gte=" + minDate + "&primary_release_date.lte=" + today + "&sort_by=popularity.desc&vote_count.gte=10&include_adult=false&page=" + page).catch(() => ({ data: { results: [] } }))
       ]);
 
-      // 1. Hollywood pool (Viral Day + Now Playing New Movies + Top Popular English)
-      const viralEn = (viralDayRes.data?.results || []).filter(x => x && x.original_language === 'en' && x.original_language !== 'bn');
-      const nowPlayingEn = (nowPlayingRes.data?.results || []).filter(x => x && x.original_language === 'en' && x.original_language !== 'bn');
-      const discEn = (hollywoodRes.data?.results || []).filter(x => x && x.original_language === 'en' && x.original_language !== 'bn');
+      const isRecentMovie = (x) => {
+        if (!x || !x.poster_path || x.original_language === 'bn') return false;
+        const d = x.release_date;
+        if (!d) return false;
+        const y = parseInt(d.slice(0, 4), 10);
+        return y >= minYear && d <= today;
+      };
+
+      // 1. Hollywood pool (Viral Day + Now Playing + Discover, past 3 years)
       const hMap = new Map();
-      [...viralEn, ...nowPlayingEn, ...discEn].forEach(x => {
-        if (x && x.poster_path && !hMap.has(x.id) && x.original_language !== 'bn') {
+      [...(viralDayRes.data?.results || []), ...(nowPlayingRes.data?.results || []), ...(hollywoodRes.data?.results || [])].forEach(x => {
+        if (x && x.original_language === 'en' && isRecentMovie(x) && !hMap.has(x.id)) {
           hMap.set(x.id, { ...x, media_type: "movie", audio_badge: "Hollywood" });
         }
       });
       const hList = Array.from(hMap.values());
 
-      // 2. Bollywood pool (Viral Day Hindi + Discover Hindi)
-      const viralHi = (viralDayRes.data?.results || []).filter(x => x && x.original_language === 'hi' && x.original_language !== 'bn');
-      const discHi = (bollywoodRes.data?.results || []).filter(x => x && x.original_language === 'hi' && x.original_language !== 'bn');
+      // 2. Bollywood pool (Viral Day Hindi + Discover Hindi, past 3 years)
       const bMap = new Map();
-      [...viralHi, ...discHi].forEach(x => {
-        if (x && x.poster_path && !bMap.has(x.id) && x.original_language !== 'bn') {
+      [...(viralDayRes.data?.results || []), ...(bollywoodRes.data?.results || [])].forEach(x => {
+        if (x && x.original_language === 'hi' && isRecentMovie(x) && !bMap.has(x.id)) {
           bMap.set(x.id, { ...x, media_type: "movie", audio_badge: "Bollywood" });
         }
       });
       const bList = Array.from(bMap.values());
 
-      // 3. Dubbed pool (Doraemon movies + Action/Animation blockbusters + South Indian hits)
-      const doraemonMovies = (doraemonRes.data?.results || []).filter(x => x && x.poster_path && x.original_language !== 'bn');
-      const dCombined = [...doraemonMovies, ...(dubbedActionRes.data?.results || []), ...(southRes.data?.results || [])];
+      // 3. Dubbed pool (Doraemon movies + Action/Animation blockbusters + South Indian hits, past 3 years)
       const dMap = new Map();
-      dCombined.forEach(x => {
-        if (x && x.poster_path && !dMap.has(x.id) && x.original_language !== 'bn') {
+      [...(doraemonRes.data?.results || []), ...(dubbedActionRes.data?.results || []), ...(southRes.data?.results || [])].forEach(x => {
+        if (x && isRecentMovie(x) && !dMap.has(x.id)) {
           dMap.set(x.id, { ...x, media_type: "movie", audio_badge: "Hindi Dub", is_dubbed: true });
         }
       });
@@ -356,7 +360,7 @@ const fetchRegionalTrending = async (mediaType = "movie", page = 1) => {
         else if (hI < hList.length) pick = hList[hI++];
         else if (bI < bList.length) pick = bList[bI++];
         else if (dI < dList.length) pick = dList[dI++];
-        if (pick && !seen.has(pick.id) && pick.original_language !== 'bn') {
+        if (pick && !seen.has(pick.id) && isRecentMovie(pick)) {
           seen.add(pick.id);
           mixed.push(pick);
         }
@@ -366,39 +370,43 @@ const fetchRegionalTrending = async (mediaType = "movie", page = 1) => {
       const [viralTvRes, doraemonTvRes, hollywoodTvRes, bollywoodTvRes, dubbedAnimeRes] = await Promise.all([
         me.get(mt + "/trending/tv/day?api_key=" + ht).catch(() => ({ data: { results: [] } })),
         me.get(mt + "/search/tv?api_key=" + ht + "&query=Doraemon").catch(() => ({ data: { results: [] } })),
-        me.get(mt + "/discover/tv?api_key=" + ht + "&with_original_language=en&sort_by=popularity.desc&" + dateField + ".lte=" + today + "&vote_count.gte=15&include_adult=false&page=" + page).catch(() => ({ data: { results: [] } })),
-        me.get(mt + "/discover/tv?api_key=" + ht + "&with_original_language=hi&sort_by=popularity.desc&" + dateField + ".lte=" + today + "&vote_count.gte=3&include_adult=false&page=" + page).catch(() => ({ data: { results: [] } })),
-        me.get(mt + "/discover/tv?api_key=" + ht + "&with_original_language=ja|ko&with_genres=16,10759&sort_by=popularity.desc&" + dateField + ".lte=" + today + "&vote_count.gte=15&include_adult=false&page=" + page).catch(() => ({ data: { results: [] } }))
+        me.get(mt + "/discover/tv?api_key=" + ht + "&with_original_language=en&first_air_date.gte=" + minDate + "&first_air_date.lte=" + today + "&sort_by=popularity.desc&vote_count.gte=10&include_adult=false&page=" + page).catch(() => ({ data: { results: [] } })),
+        me.get(mt + "/discover/tv?api_key=" + ht + "&with_original_language=hi&first_air_date.gte=" + minDate + "&first_air_date.lte=" + today + "&sort_by=popularity.desc&vote_count.gte=2&include_adult=false&page=" + page).catch(() => ({ data: { results: [] } })),
+        me.get(mt + "/discover/tv?api_key=" + ht + "&with_original_language=ja|ko&with_genres=16,10759&first_air_date.gte=" + minDate + "&first_air_date.lte=" + today + "&sort_by=popularity.desc&vote_count.gte=10&include_adult=false&page=" + page).catch(() => ({ data: { results: [] } }))
       ]);
 
-      // 1. Hollywood TV (Viral Day + Discover)
-      const viralEn = (viralTvRes.data?.results || []).filter(x => x && x.original_language === 'en' && x.original_language !== 'bn');
-      const discEn = (hollywoodTvRes.data?.results || []).filter(x => x && x.original_language === 'en' && x.original_language !== 'bn');
+      const isRecentTv = (x) => {
+        if (!x || !x.poster_path || x.original_language === 'bn') return false;
+        const name = (x.name || x.title || '').toLowerCase();
+        if (name.includes('doraemon')) return true;
+        const d = x.first_air_date;
+        if (!d) return false;
+        const y = parseInt(d.slice(0, 4), 10);
+        return y >= minYear && d <= today;
+      };
+
+      // 1. Hollywood TV (Past 3 years)
       const hMap = new Map();
-      [...viralEn, ...discEn].forEach(x => {
-        if (x && x.poster_path && !hMap.has(x.id)) {
+      [...(viralTvRes.data?.results || []), ...(hollywoodTvRes.data?.results || [])].forEach(x => {
+        if (x && x.original_language === 'en' && isRecentTv(x) && !hMap.has(x.id)) {
           hMap.set(x.id, { ...x, media_type: "tv", audio_badge: "Hollywood" });
         }
       });
       const hList = Array.from(hMap.values());
 
-      // 2. Bollywood TV (Viral Day + Discover)
-      const viralHi = (viralTvRes.data?.results || []).filter(x => x && x.original_language === 'hi' && x.original_language !== 'bn');
-      const discHi = (bollywoodTvRes.data?.results || []).filter(x => x && x.original_language === 'hi' && x.original_language !== 'bn');
+      // 2. Bollywood TV (Past 3 years)
       const bMap = new Map();
-      [...viralHi, ...discHi].forEach(x => {
-        if (x && x.poster_path && !bMap.has(x.id)) {
+      [...(viralTvRes.data?.results || []), ...(bollywoodTvRes.data?.results || [])].forEach(x => {
+        if (x && x.original_language === 'hi' && isRecentTv(x) && !bMap.has(x.id)) {
           bMap.set(x.id, { ...x, media_type: "tv", audio_badge: "Bollywood" });
         }
       });
       const bList = Array.from(bMap.values());
 
-      // 3. Dubbed pool (Doraemon series + Viral Anime like Demon Slayer/Jujutsu Kaisen/Solo Leveling)
-      const doraemonShows = (doraemonTvRes.data?.results || []).filter(x => x && x.poster_path);
-      const animeShows = (dubbedAnimeRes.data?.results || []).filter(x => x && x.poster_path);
+      // 3. Dubbed pool (Doraemon ongoing + Viral Anime past 3 years)
       const dMap = new Map();
-      [...doraemonShows, ...animeShows].forEach(x => {
-        if (x && x.poster_path && !dMap.has(x.id)) {
+      [...(doraemonTvRes.data?.results || []).filter(x => (x.name || '').toLowerCase() === 'doraemon').slice(0, 1), ...(dubbedAnimeRes.data?.results || [])].forEach(x => {
+        if (x && isRecentTv(x) && !dMap.has(x.id)) {
           dMap.set(x.id, { ...x, media_type: "tv", audio_badge: "Hindi Dub", is_dubbed: true });
         }
       });
@@ -417,7 +425,7 @@ const fetchRegionalTrending = async (mediaType = "movie", page = 1) => {
         else if (hI < hList.length) pick = hList[hI++];
         else if (bI < bList.length) pick = bList[bI++];
         else if (dI < dList.length) pick = dList[dI++];
-        if (pick && !seen.has(pick.id) && pick.original_language !== 'bn') {
+        if (pick && !seen.has(pick.id) && isRecentTv(pick)) {
           seen.add(pick.id);
           mixed.push(pick);
         }
@@ -427,7 +435,11 @@ const fetchRegionalTrending = async (mediaType = "movie", page = 1) => {
   } catch (err) {
     console.error("fetchRegionalTrending error:", err);
     const fallback = await me.get(mt + "/trending/" + type + "/week?api_key=" + ht);
-    return (fallback.data?.results || []).filter(x => x && x.poster_path && x.original_language !== 'bn');
+    return (fallback.data?.results || []).filter(x => {
+      if (!x || !x.poster_path || x.original_language === 'bn') return false;
+      const d = x.release_date || x.first_air_date;
+      return d && parseInt(d.slice(0, 4), 10) >= minYear;
+    });
   }
 };
 function tx(n,i){const[l,r]=M.useState(n);return M.useEffect(()=>{const u=setTimeout(()=>{r(n)},i);return()=>{clearTimeout(u)}},[n,i]),l}function nx(n,i){M.useEffect(()=>{const l=r=>{!n.current||n.current.contains(r.target)||i(r)};return document.addEventListener("mousedown",l),document.addEventListener("touchstart",l),()=>{document.removeEventListener("mousedown",l),document.removeEventListener("touchstart",l)}},[n,i])}const ax=M.createContext(void 0),aT=({children:n})=>{const[i,l]=M.useState(null),[r,u]=M.useState([]),[h,f]=M.useState(!0),m=async()=>{try{const[p,g]=await Promise.all([me.get("/api/settings"),me.get("/api/pages")]);l(p.data),u(g.data)}catch(p){console.error("Failed to fetch settings:",p)}finally{f(!1)}};return M.useEffect(()=>{m()},[]),d.jsx(ax.Provider,{value:{settings:i,pages:r,isLoading:h,refreshSettings:m},children:n})},Ji=()=>{const n=M.useContext(ax);if(n===void 0)throw new Error("useSettings must be used within a SettingsProvider");return n},iT=({currentType:n,setCurrentType:i,searchQuery:l,setSearchQuery:r,onFilterClick:u,onSuggestionClick:h,onWatchlistClick:f,watchlistCount:m,user:p,onAuthClick:g,onLogout:x,onAdminClick:b,hideCategories:hideCategories=false})=>{
