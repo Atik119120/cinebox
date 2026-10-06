@@ -125,18 +125,20 @@
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;
       }
-      body.page-scrolled nav.cine-main-nav {
-        background: rgba(9, 11, 15, 0.90) !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-        backdrop-filter: blur(20px) saturate(140%) !important;
-        -webkit-backdrop-filter: blur(20px) saturate(140%) !important;
-        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.6) !important;
-      }
-      body.page-scrolled nav.cine-main-nav::after {
-        opacity: 1 !important;
-        background: rgba(9, 11, 15, 0.90) !important;
-        backdrop-filter: blur(20px) saturate(140%) !important;
-        -webkit-backdrop-filter: blur(20px) saturate(140%) !important;
+      @media (min-width: 768px) {
+        body.page-scrolled nav.cine-main-nav {
+          background: rgba(9, 11, 15, 0.90) !important;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+          backdrop-filter: blur(20px) saturate(140%) !important;
+          -webkit-backdrop-filter: blur(20px) saturate(140%) !important;
+          box-shadow: 0 4px 24px rgba(0, 0, 0, 0.6) !important;
+        }
+        body.page-scrolled nav.cine-main-nav::after {
+          opacity: 1 !important;
+          background: rgba(9, 11, 15, 0.90) !important;
+          backdrop-filter: blur(20px) saturate(140%) !important;
+          -webkit-backdrop-filter: blur(20px) saturate(140%) !important;
+        }
       }
 
       /* Header Logo: prominent, crisp, slightly larger */
@@ -191,28 +193,21 @@
         nav .max-w-7xl > div:last-child > button { width: 2.25rem !important; height: 2.25rem !important; }
         nav .max-w-7xl > div:last-child form { min-width: 0; }
       }
-      @media (max-width: 767px) {
-        /* One compact top row; keep the existing action handlers in the bottom bar. */
-        nav .max-w-7xl { display: grid !important; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: "logo search pf"; align-items: center; gap: 10px !important; height: auto !important; padding: 10px 16px !important; }
-        nav .max-w-7xl > div:first-child { grid-area: logo; min-width: 0; }
-        nav .cinebox-header-logo { max-width: 130px !important; height: 40px !important; max-height: 42px !important; }
-        nav .max-w-7xl > div:last-child { display: contents !important; }
-        nav .max-w-7xl > div:last-child > div:first-child { grid-area: search; width: 100% !important; max-width: none !important; min-width: 0; }
-        nav .max-w-7xl > div:last-child form, nav .max-w-7xl > div:last-child form input { width: 100% !important; max-width: none !important; min-width: 0; }
-        nav form input { height: 36px !important; padding-left: 36px !important; font-size: 12px !important; }
-        nav form svg.absolute { left: 12px !important; }
-        nav .max-w-7xl > div:last-child > button:last-child { grid-area: pf; width: 36px !important; height: 36px !important; }
-
-        /* Five equal, easy-to-tap destinations: saved, movies, series, anime, filters. */
-        nav::before { content: ""; position: fixed; bottom: 0; left: 0; right: 0; height: calc(64px + env(safe-area-inset-bottom)); background: #09090b; border-top: 1px solid #3f3f46; z-index: 0; }
-        nav .max-w-7xl > div:nth-child(2) { display: flex !important; position: fixed; bottom: env(safe-area-inset-bottom); left: 20%; width: 60%; height: 64px; padding: 6px 0; margin: 0 !important; align-items: stretch; gap: 0; border: 0; background: none; border-radius: 0; z-index: 1; }
-        nav .max-w-7xl > div:nth-child(2) > button { width: 33.333%; min-width: 0; padding: 4px 0 !important; border: 0 !important; border-radius: 4px !important; background: none !important; box-shadow: none !important; font-size: 12px !important; line-height: 1.2; white-space: nowrap; }
-        nav .max-w-7xl > div:nth-child(2) > button.bg-red-600 { color: #ef4444 !important; }
-        nav .max-w-7xl > div:last-child > button[title="Watchlist"], nav .max-w-7xl > div:last-child > button[title="Filters"] { display: flex !important; position: fixed; bottom: env(safe-area-inset-bottom); width: 20% !important; height: 64px !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important; background: none !important; z-index: 1; }
-        nav .max-w-7xl > div:last-child > button[title="Watchlist"] { left: 0; }
-        nav .max-w-7xl > div:last-child > button[title="Filters"] { right: 0; }
-        nav .max-w-7xl > div:last-child > button[title="Watchlist"]:hover, nav .max-w-7xl > div:last-child > button[title="Filters"]:hover { background: #27272a !important; }
-        body { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
+      /* Desktop header navigation styles */
+      @media (min-width: 768px) {
+        nav .max-w-7xl > div:nth-child(2),
+        nav.cine-main-nav .cine-category-nav {
+          position: static !important;
+          width: auto !important;
+          height: auto !important;
+          bottom: auto !important;
+          left: auto !important;
+          right: auto !important;
+          padding: 4px !important;
+          border-top: none !important;
+          box-shadow: none !important;
+          z-index: auto !important;
+        }
       }
       main:has(.cine-watch-page) { padding-left: 0 !important; padding-right: 0 !important; }
 
@@ -1052,48 +1047,137 @@
       }
       /* Phone: one consistent content gutter instead of stacked padding. */
       @media (max-width: 767px) {
-        /* Mobile: Transparent header at page top, dark frosted glass when scrolled */
-        nav.cine-main-nav { background: transparent !important; backdrop-filter: none !important; }
+        /* Mobile: Transparent header at page top, dark frosted glass via ::after when scrolled */
+        nav.cine-main-nav,
+        body.page-scrolled nav.cine-main-nav,
+        body.page-at-top nav.cine-main-nav,
+        body:not(.page-scrolled) nav.cine-main-nav {
+          background: transparent !important;
+          background-color: transparent !important;
+          border-bottom-color: transparent !important;
+          backdrop-filter: none !important;
+          -webkit-backdrop-filter: none !important;
+          filter: none !important;
+          transform: none !important;
+          box-shadow: none !important;
+        }
         nav.cine-main-nav::after {
-          content: ""; position: absolute; inset: 0; z-index: -1;
-          background: rgba(9, 11, 15, 0.90); backdrop-filter: blur(18px) saturate(130%); -webkit-backdrop-filter: blur(18px) saturate(130%);
-          pointer-events: none; transition: opacity 0.3s ease;
+          content: "";
+          position: absolute;
+          inset: 0;
+          z-index: -1;
+          background: rgba(9, 11, 15, 0.92);
+          backdrop-filter: blur(18px) saturate(130%);
+          -webkit-backdrop-filter: blur(18px) saturate(130%);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+          pointer-events: none;
+          transition: opacity 0.3s ease;
         }
         body.page-at-top nav.cine-main-nav::after,
         body:not(.page-scrolled) nav.cine-main-nav::after { opacity: 0 !important; }
         body.page-scrolled nav.cine-main-nav::after { opacity: 1 !important; }
-        nav.cine-network-nav .cine-category-nav { display: none !important; }
-        nav.cine-network-nav::before { display: none !important; }
-        body:has(nav.cine-network-nav) { padding-bottom: env(safe-area-inset-bottom); }
+
+        /* Mobile Top Header: Logo, Search, Filters, Saved, Profile */
         nav .max-w-7xl {
+          display: grid !important;
           grid-template-columns: auto minmax(0, 1fr) auto auto auto !important;
           grid-template-areas: "logo search filters saved pf" !important;
+          align-items: center !important;
           gap: 8px !important;
-          padding-left: 14px !important;
-          padding-right: 14px !important;
+          height: auto !important;
+          padding: 8px 14px !important;
         }
-        nav .cinebox-header-logo { max-width: 130px !important; height: 40px !important; max-height: 42px !important; }
+        nav .max-w-7xl > div:first-child { grid-area: logo; min-width: 0; }
+        nav .cinebox-header-logo { max-width: 125px !important; height: 38px !important; max-height: 40px !important; }
+        nav .max-w-7xl > div:last-child { display: contents !important; }
+        nav .max-w-7xl > div:last-child > div:first-child { grid-area: search; width: 100% !important; max-width: none !important; min-width: 0; }
+        nav .max-w-7xl > div:last-child form,
+        nav .max-w-7xl > div:last-child form input { width: 100% !important; max-width: none !important; min-width: 0; }
+        nav form input { height: 36px !important; padding-left: 36px !important; font-size: 12px !important; }
+        nav form svg.absolute { left: 12px !important; }
         nav .max-w-7xl > div:last-child > button[title="Filters"],
         nav .max-w-7xl > div:last-child > button[title="Watchlist"] {
-          position: static !important; width: 34px !important; height: 36px !important;
-          border: 1px solid #3f3f46 !important; border-radius: 5px !important;
-          background: #18181b !important; z-index: auto;
+          position: static !important;
+          width: 34px !important;
+          height: 34px !important;
+          border: 1px solid #3f3f46 !important;
+          border-radius: 6px !important;
+          background: #18181b !important;
+          z-index: auto !important;
         }
         nav .max-w-7xl > div:last-child > button[title="Filters"] { grid-area: filters; }
         nav .max-w-7xl > div:last-child > button[title="Watchlist"] { grid-area: saved; }
-        nav .max-w-7xl > div:nth-child(2) {
-          left: 0 !important; width: 100% !important;
-          padding: 7px 14px !important; gap: 8px !important;
+        nav .max-w-7xl > div:last-child > button:last-child {
+          grid-area: pf;
+          position: static !important;
+          width: 34px !important;
+          height: 34px !important;
+          border-radius: 6px !important;
         }
-        nav.cine-network-nav .max-w-7xl > div:nth-child(2) { display: none !important; }
-        nav .max-w-7xl > div:nth-child(2) > button {
-          flex: 1; width: auto !important; border: 1px solid #3f3f46 !important;
-          border-radius: 5px !important; background: #18181b !important;
-          font-weight: 700;
+
+        /* Prevent pseudo-elements from creating ghost bottom bars */
+        nav::before { display: none !important; }
+        .cine-mobile-bottom-bar { display: none !important; }
+
+        /* Mobile Bottom Nav Bar: Movies / Series / Anime FIXED AT BOTTOM ALWAYS */
+        nav .max-w-7xl > div:nth-child(2),
+        nav.cine-main-nav .cine-category-nav {
+          display: flex !important;
+          position: fixed !important;
+          bottom: 0 !important;
+          left: 0 !important;
+          right: 0 !important;
+          width: 100% !important;
+          height: calc(54px + env(safe-area-inset-bottom)) !important;
+          padding: 7px 12px calc(7px + env(safe-area-inset-bottom)) 12px !important;
+          margin: 0 !important;
+          background: rgba(9, 11, 15, 0.96) !important;
+          backdrop-filter: blur(16px) saturate(140%) !important;
+          -webkit-backdrop-filter: blur(16px) saturate(140%) !important;
+          border-top: 1px solid #27272a !important;
+          border-radius: 0 !important;
+          align-items: center !important;
+          justify-content: stretch !important;
+          gap: 8px !important;
+          z-index: 9999 !important;
+          box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.6) !important;
         }
-        nav .max-w-7xl > div:nth-child(2) > button.bg-red-600 {
-          background: #dc2626 !important; color: #fafafa !important; border-color: #dc2626 !important;
+        nav.cine-network-nav .max-w-7xl > div:nth-child(2),
+        nav.cine-network-nav .cine-category-nav { display: none !important; }
+        body:has(nav.cine-network-nav) { padding-bottom: env(safe-area-inset-bottom) !important; }
+
+        nav .max-w-7xl > div:nth-child(2) > button,
+        nav.cine-main-nav .cine-category-nav > button {
+          flex: 1 1 0% !important;
+          width: auto !important;
+          min-width: 0 !important;
+          height: 38px !important;
+          padding: 0 8px !important;
+          border: 1px solid #3f3f46 !important;
+          border-radius: 6px !important;
+          background: #18181b !important;
+          color: #e4e4e7 !important;
+          font-weight: 700 !important;
+          font-size: 13px !important;
+          line-height: 1 !important;
+          white-space: nowrap !important;
+          display: inline-flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease !important;
+          box-shadow: none !important;
         }
+        nav .max-w-7xl > div:nth-child(2) > button.bg-red-600,
+        nav.cine-main-nav .cine-category-nav > button.bg-red-600 {
+          background: #dc2626 !important;
+          color: #ffffff !important;
+          border-color: #dc2626 !important;
+          box-shadow: 0 2px 8px rgba(220, 38, 38, 0.35) !important;
+        }
+
+        /* Keep body content from being hidden behind fixed bottom bar */
+        body { padding-bottom: calc(58px + env(safe-area-inset-bottom)) !important; }
         main, main > div, main section > div, #root > div > div:not(nav) {
           padding-left: 0 !important; padding-right: 0 !important;
         }
