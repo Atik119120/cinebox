@@ -86,8 +86,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "referrer", content: "strict-origin-when-cross-origin" },
     ],
     links: [
+      { rel: "preconnect", href: "https://cdnjs.cloudflare.com", crossOrigin: "anonymous" },
+      { rel: "preconnect", href: "https://image.tmdb.org", crossOrigin: "anonymous" },
+      { rel: "preconnect", href: "https://fonts.googleapis.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
         href: appCss,

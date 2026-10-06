@@ -32,9 +32,35 @@ export const Route = createFileRoute("/api/$")({
           const sizeQ = url.searchParams.get("size") ?? "w500";
           const size = SIZES.includes(sizeQ) ? sizeQ : "w500";
           let target = "";
-          if (direct?.startsWith("http")) target = direct;
-          else if (path) target = `https://image.tmdb.org/t/p/${size}${path.startsWith("/") ? path : "/" + path}`;
-          else return new Response("Missing image path or url", { status: 400 });
+          if (direct) {
+            try {
+              const parsed = new URL(direct);
+              if (parsed.protocol !== "https:") {
+                return new Response("Invalid protocol (HTTPS required)", { status: 400 });
+              }
+              const host = parsed.hostname.toLowerCase();
+              // Prevent SSRF to internal networks or metadata services
+              if (
+                host === "localhost" ||
+                host.endsWith(".local") ||
+                host === "127.0.0.1" ||
+                host === "169.254.169.254" ||
+                host.startsWith("192.168.") ||
+                host.startsWith("10.") ||
+                host.startsWith("172.")
+              ) {
+                return new Response("Forbidden host address", { status: 403 });
+              }
+              target = direct;
+            } catch {
+              return new Response("Malformed URL", { status: 400 });
+            }
+          } else if (path) {
+            const cleanPath = path.replace(/^[/\\]+/, "").replace(/\.\./g, "");
+            target = `https://image.tmdb.org/t/p/${size}/${cleanPath}`;
+          } else {
+            return new Response("Missing image path or url", { status: 400 });
+          }
           const r = await fetch(target);
           if (!r.ok) return new Response("Image not found", { status: r.status });
           return new Response(r.body, {

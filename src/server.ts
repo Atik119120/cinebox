@@ -44,18 +44,30 @@ function isH3SwallowedErrorBody(body: string): boolean {
   }
 }
 
+import { inspectFirewall, enhanceResponseSecurity } from "./lib/security-firewall";
+
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
+    // 1. Enterprise WAF Inspection (Anti-DDoS, Exploit Probes, Bad Bots, SQLi/XSS)
+    const blockedResponse = inspectFirewall(request);
+    if (blockedResponse) {
+      return enhanceResponseSecurity(blockedResponse, request.url);
+    }
+
     try {
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
-      return await normalizeCatastrophicSsrResponse(response);
+      const normalized = await normalizeCatastrophicSsrResponse(response);
+      // 2. Attach HTTP Security Headers and CDN Edge Cache Headers
+      return enhanceResponseSecurity(normalized, request.url);
     } catch (error) {
       console.error(error);
-      return new Response(renderErrorPage(), {
+      const errorResponse = new Response(renderErrorPage(), {
         status: 500,
         headers: { "content-type": "text/html; charset=utf-8" },
       });
+      return enhanceResponseSecurity(errorResponse, request.url);
     }
   },
 };
+

@@ -7,6 +7,66 @@
     <meta name="description" content="Stream the latest movies and TV shows in high definition with Cineflex. Explore trending titles, search catalog, manage watchlists, and customize platform settings." />
     <meta property="og:title" content="Cineflex - Stream Movies & TV Shows" />
     <meta property="og:description" content="Stream the latest movies and TV shows in high definition with Cineflex. Explore trending titles, search catalog, manage watchlists, and customize platform settings." />
+    <!-- Global CDN Acceleration & DNS Preconnect -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
+    <link rel="preconnect" href="https://image.tmdb.org" crossorigin />
+    <link rel="dns-prefetch" href="https://image.tmdb.org" />
+    <link rel="preconnect" href="https://api.themoviedb.org" crossorigin />
+    <link rel="dns-prefetch" href="https://api.themoviedb.org" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+
+    <!-- HTTP Security & Privacy Meta -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+    <!-- Cinebox Client-Side Security Shield & Anti-Exploit Firewall -->
+    <script>
+      (function() {
+        'use strict';
+        // 1. Anti-Clickjacking Frame Buster
+        if (window.top !== window.self) {
+          try {
+            if (window.top.location.hostname !== window.location.hostname) {
+              window.top.location.href = window.self.location.href;
+            }
+          } catch (e) {
+            console.warn('[Cinebox Shield] Embedded in untrusted cross-origin iframe');
+          }
+        }
+
+        // 2. Unsolicited Popup & Ad-Hijack Firewall
+        var originalOpen = window.open;
+        window.open = function(url, target, features) {
+          if (!url) return null;
+          var str = String(url).trim().toLowerCase();
+          if (str.indexOf('javascript:') === 0 || str.indexOf('data:text/html') === 0) {
+            console.warn('[Cinebox Shield] Blocked unsafe script url:', url);
+            return null;
+          }
+          var adPatterns = ['bet365', '1xbet', 'propellerads', 'popads', 'adcash', 'onclickads'];
+          for (var i = 0; i < adPatterns.length; i++) {
+            if (str.indexOf(adPatterns[i]) !== -1) {
+              console.warn('[Cinebox Shield] Blocked rogue ad redirect to:', url);
+              return null;
+            }
+          }
+          return originalOpen.call(window, url, target, features);
+        };
+
+        // 3. Self-XSS Warning
+        setTimeout(function() {
+          console.log(
+            '%c🛑 CINEBOX SECURITY SHIELD ACTIVE %c\\nProtected by Cinebox WAF & Edge Firewall.',
+            'background: #dc2626; color: white; font-size: 14px; font-weight: bold; padding: 4px 8px; border-radius: 4px;',
+            'color: #94a3b8; font-size: 12px;'
+          );
+        }, 1000);
+      })();
+    </script>
     <link rel="icon" type="image/png" href="/assets/cinebox-logo.png" />
     <script type="module" src="/src/cinebox/account-bridge.ts"></script>
     <script type="module" crossorigin src="/assets/index-v2.js?v=20261006_v102"></script>
