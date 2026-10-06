@@ -298,21 +298,51 @@ const fetchRegionalTrending = async (mediaType = "movie", page = 1) => {
   const dateField = type === "movie" ? "primary_release_date" : "first_air_date";
   try {
     if (type === "movie") {
-      const hollywoodReq = me.get(mt + "/discover/movie?api_key=" + ht + "&with_original_language=en&sort_by=popularity.desc&" + dateField + ".lte=" + today + "&vote_count.gte=25&include_adult=false&page=" + page);
-      const bollywoodReq = me.get(mt + "/discover/movie?api_key=" + ht + "&with_original_language=hi&sort_by=popularity.desc&" + dateField + ".lte=" + today + "&vote_count.gte=5&include_adult=false&page=" + page);
-      const dubbedActionReq = me.get(mt + "/discover/movie?api_key=" + ht + "&with_original_language=en&with_genres=28,878,12&sort_by=popularity.desc&" + dateField + ".lte=" + today + "&vote_count.gte=40&include_adult=false&page=" + (page === 1 ? 2 : page + 1));
-      const dubbedSouthReq = me.get(mt + "/discover/movie?api_key=" + ht + "&with_original_language=te|ta|ml|kn&sort_by=popularity.desc&" + dateField + ".lte=" + today + "&vote_count.gte=10&include_adult=false&page=" + page);
-      const [hRes, bRes, daRes, dsRes] = await Promise.all([
-        hollywoodReq.catch(() => ({ data: { results: [] } })),
-        bollywoodReq.catch(() => ({ data: { results: [] } })),
-        dubbedActionReq.catch(() => ({ data: { results: [] } })),
-        dubbedSouthReq.catch(() => ({ data: { results: [] } }))
+      const [viralDayRes, nowPlayingRes, hollywoodRes, bollywoodRes, doraemonRes, dubbedActionRes, southRes] = await Promise.all([
+        me.get(mt + "/trending/movie/day?api_key=" + ht).catch(() => ({ data: { results: [] } })),
+        me.get(mt + "/movie/now_playing?api_key=" + ht + "&page=" + page).catch(() => ({ data: { results: [] } })),
+        me.get(mt + "/discover/movie?api_key=" + ht + "&with_original_language=en&sort_by=popularity.desc&" + dateField + ".lte=" + today + "&vote_count.gte=25&include_adult=false&page=" + page).catch(() => ({ data: { results: [] } })),
+        me.get(mt + "/discover/movie?api_key=" + ht + "&with_original_language=hi&sort_by=popularity.desc&" + dateField + ".lte=" + today + "&vote_count.gte=5&include_adult=false&page=" + page).catch(() => ({ data: { results: [] } })),
+        me.get(mt + "/search/movie?api_key=" + ht + "&query=Doraemon").catch(() => ({ data: { results: [] } })),
+        me.get(mt + "/discover/movie?api_key=" + ht + "&with_original_language=en&with_genres=28,878,12,16&sort_by=popularity.desc&" + dateField + ".lte=" + today + "&vote_count.gte=30&include_adult=false&page=" + (page === 1 ? 2 : page + 1)).catch(() => ({ data: { results: [] } })),
+        me.get(mt + "/discover/movie?api_key=" + ht + "&with_original_language=te|ta|ml|kn&sort_by=popularity.desc&" + dateField + ".lte=" + today + "&vote_count.gte=10&include_adult=false&page=" + page).catch(() => ({ data: { results: [] } }))
       ]);
-      const hList = (hRes.data?.results || []).filter(x => x && x.poster_path && x.original_language !== 'bn').map(x => ({ ...x, media_type: "movie", audio_badge: "Hollywood" }));
-      const bList = (bRes.data?.results || []).filter(x => x && x.poster_path && x.original_language !== 'bn').map(x => ({ ...x, media_type: "movie", audio_badge: "Bollywood" }));
-      const dCombined = [...(daRes.data?.results || []), ...(dsRes.data?.results || [])];
-      const dList = dCombined.filter(x => x && x.poster_path && x.original_language !== 'bn').map(x => ({ ...x, media_type: "movie", audio_badge: "Hindi Dub", is_dubbed: true }));
-      // 50%-60% Hollywood (5/10), 30% Bollywood (3/10), 20% English Dubbing / Dual Audio (2/10)
+
+      // 1. Hollywood pool (Viral Day + Now Playing New Movies + Top Popular English)
+      const viralEn = (viralDayRes.data?.results || []).filter(x => x && x.original_language === 'en' && x.original_language !== 'bn');
+      const nowPlayingEn = (nowPlayingRes.data?.results || []).filter(x => x && x.original_language === 'en' && x.original_language !== 'bn');
+      const discEn = (hollywoodRes.data?.results || []).filter(x => x && x.original_language === 'en' && x.original_language !== 'bn');
+      const hMap = new Map();
+      [...viralEn, ...nowPlayingEn, ...discEn].forEach(x => {
+        if (x && x.poster_path && !hMap.has(x.id) && x.original_language !== 'bn') {
+          hMap.set(x.id, { ...x, media_type: "movie", audio_badge: "Hollywood" });
+        }
+      });
+      const hList = Array.from(hMap.values());
+
+      // 2. Bollywood pool (Viral Day Hindi + Discover Hindi)
+      const viralHi = (viralDayRes.data?.results || []).filter(x => x && x.original_language === 'hi' && x.original_language !== 'bn');
+      const discHi = (bollywoodRes.data?.results || []).filter(x => x && x.original_language === 'hi' && x.original_language !== 'bn');
+      const bMap = new Map();
+      [...viralHi, ...discHi].forEach(x => {
+        if (x && x.poster_path && !bMap.has(x.id) && x.original_language !== 'bn') {
+          bMap.set(x.id, { ...x, media_type: "movie", audio_badge: "Bollywood" });
+        }
+      });
+      const bList = Array.from(bMap.values());
+
+      // 3. Dubbed pool (Doraemon movies + Action/Animation blockbusters + South Indian hits)
+      const doraemonMovies = (doraemonRes.data?.results || []).filter(x => x && x.poster_path && x.original_language !== 'bn');
+      const dCombined = [...doraemonMovies, ...(dubbedActionRes.data?.results || []), ...(southRes.data?.results || [])];
+      const dMap = new Map();
+      dCombined.forEach(x => {
+        if (x && x.poster_path && !dMap.has(x.id) && x.original_language !== 'bn') {
+          dMap.set(x.id, { ...x, media_type: "movie", audio_badge: "Hindi Dub", is_dubbed: true });
+        }
+      });
+      const dList = Array.from(dMap.values());
+
+      // 50%-60% Hollywood (5/10), 30% Bollywood (3/10), 20% Dubbed & Doraemon (2/10)
       const pattern = ['H', 'B', 'H', 'D', 'H', 'B', 'H', 'D', 'H', 'B'];
       const mixed = [];
       const seen = new Set();
@@ -333,17 +363,47 @@ const fetchRegionalTrending = async (mediaType = "movie", page = 1) => {
       }
       return mixed;
     } else {
-      const hollywoodReq = me.get(mt + "/discover/tv?api_key=" + ht + "&with_original_language=en&sort_by=popularity.desc&" + dateField + ".lte=" + today + "&vote_count.gte=15&include_adult=false&page=" + page);
-      const bollywoodReq = me.get(mt + "/discover/tv?api_key=" + ht + "&with_original_language=hi&sort_by=popularity.desc&" + dateField + ".lte=" + today + "&vote_count.gte=3&include_adult=false&page=" + page);
-      const dubbedReq = me.get(mt + "/discover/tv?api_key=" + ht + "&with_original_language=ko|ja|es|tr&sort_by=popularity.desc&" + dateField + ".lte=" + today + "&vote_count.gte=10&include_adult=false&page=" + page);
-      const [hRes, bRes, dRes] = await Promise.all([
-        hollywoodReq.catch(() => ({ data: { results: [] } })),
-        bollywoodReq.catch(() => ({ data: { results: [] } })),
-        dubbedReq.catch(() => ({ data: { results: [] } }))
+      const [viralTvRes, doraemonTvRes, hollywoodTvRes, bollywoodTvRes, dubbedAnimeRes] = await Promise.all([
+        me.get(mt + "/trending/tv/day?api_key=" + ht).catch(() => ({ data: { results: [] } })),
+        me.get(mt + "/search/tv?api_key=" + ht + "&query=Doraemon").catch(() => ({ data: { results: [] } })),
+        me.get(mt + "/discover/tv?api_key=" + ht + "&with_original_language=en&sort_by=popularity.desc&" + dateField + ".lte=" + today + "&vote_count.gte=15&include_adult=false&page=" + page).catch(() => ({ data: { results: [] } })),
+        me.get(mt + "/discover/tv?api_key=" + ht + "&with_original_language=hi&sort_by=popularity.desc&" + dateField + ".lte=" + today + "&vote_count.gte=3&include_adult=false&page=" + page).catch(() => ({ data: { results: [] } })),
+        me.get(mt + "/discover/tv?api_key=" + ht + "&with_original_language=ja|ko&with_genres=16,10759&sort_by=popularity.desc&" + dateField + ".lte=" + today + "&vote_count.gte=15&include_adult=false&page=" + page).catch(() => ({ data: { results: [] } }))
       ]);
-      const hList = (hRes.data?.results || []).filter(x => x && x.poster_path && x.original_language !== 'bn').map(x => ({ ...x, media_type: "tv", audio_badge: "Hollywood" }));
-      const bList = (bRes.data?.results || []).filter(x => x && x.poster_path && x.original_language !== 'bn').map(x => ({ ...x, media_type: "tv", audio_badge: "Bollywood" }));
-      const dList = (dRes.data?.results || []).filter(x => x && x.poster_path && x.original_language !== 'bn').map(x => ({ ...x, media_type: "tv", audio_badge: "Hindi Dub", is_dubbed: true }));
+
+      // 1. Hollywood TV (Viral Day + Discover)
+      const viralEn = (viralTvRes.data?.results || []).filter(x => x && x.original_language === 'en' && x.original_language !== 'bn');
+      const discEn = (hollywoodTvRes.data?.results || []).filter(x => x && x.original_language === 'en' && x.original_language !== 'bn');
+      const hMap = new Map();
+      [...viralEn, ...discEn].forEach(x => {
+        if (x && x.poster_path && !hMap.has(x.id)) {
+          hMap.set(x.id, { ...x, media_type: "tv", audio_badge: "Hollywood" });
+        }
+      });
+      const hList = Array.from(hMap.values());
+
+      // 2. Bollywood TV (Viral Day + Discover)
+      const viralHi = (viralTvRes.data?.results || []).filter(x => x && x.original_language === 'hi' && x.original_language !== 'bn');
+      const discHi = (bollywoodTvRes.data?.results || []).filter(x => x && x.original_language === 'hi' && x.original_language !== 'bn');
+      const bMap = new Map();
+      [...viralHi, ...discHi].forEach(x => {
+        if (x && x.poster_path && !bMap.has(x.id)) {
+          bMap.set(x.id, { ...x, media_type: "tv", audio_badge: "Bollywood" });
+        }
+      });
+      const bList = Array.from(bMap.values());
+
+      // 3. Dubbed pool (Doraemon series + Viral Anime like Demon Slayer/Jujutsu Kaisen/Solo Leveling)
+      const doraemonShows = (doraemonTvRes.data?.results || []).filter(x => x && x.poster_path);
+      const animeShows = (dubbedAnimeRes.data?.results || []).filter(x => x && x.poster_path);
+      const dMap = new Map();
+      [...doraemonShows, ...animeShows].forEach(x => {
+        if (x && x.poster_path && !dMap.has(x.id)) {
+          dMap.set(x.id, { ...x, media_type: "tv", audio_badge: "Hindi Dub", is_dubbed: true });
+        }
+      });
+      const dList = Array.from(dMap.values());
+
       const pattern = ['H', 'B', 'H', 'D', 'H', 'B', 'H', 'D', 'H', 'B'];
       const mixed = [];
       const seen = new Set();
